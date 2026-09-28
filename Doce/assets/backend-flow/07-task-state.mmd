@@ -1,0 +1,20 @@
+stateDiagram-v2
+    state "pending 排队中" as pending
+    state "running 执行中" as running
+    state "succeeded 已成功" as succeeded
+    state "failed 执行失败" as failed
+    state "timeout 执行超时" as timeout
+    state "cancelled 已取消" as cancelled
+    [*] --> pending
+    pending --> running: 配额内领取，建立尝试
+    pending --> cancelled: 运营取消
+    running --> succeeded: 当前尝试成功回写
+    running --> failed: 制作失败
+    running --> timeout: 到期／失联回收
+    running --> cancelled: 运营取消
+    failed --> pending: 自动重试尚余
+    timeout --> pending: 自动重试尚余
+    failed --> [*]: 预算耗尽，允许新任务重试
+    timeout --> [*]: 预算耗尽，允许新任务重试
+    succeeded --> [*]
+    cancelled --> [*]

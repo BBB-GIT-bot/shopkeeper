@@ -1,0 +1,23 @@
+flowchart TD
+    A["运营：建档、规格、店铺映射"] --> B["运营：录入竞品并核对"]
+    B --> C["服务：真实模型生成诊断"]
+    C --> D["运营：编辑、保存、确认诊断"]
+    D --> E["服务：至少 3 组主图＋3 套脚本"]
+    E --> F["运营：编辑、选定、确认创意"]
+    F --> G["worker：制作演示图片与视频"]
+    G --> H["运营：审核、打标；素材可用"]
+    H --> I["运营：生成、确认建议并提交"]
+    I --> J{"主管审批"}
+    J -->|"驳回，保留意见"| I
+    J -->|"批准"| K["事务：保存审批、实验、A/B 组"]
+    K --> L["运营：模拟备注＋七天经营数据"]
+    L --> M["服务：计算指标、生成五部分复盘"]
+    M --> N["运营：编辑确认，选择优化行动"]
+    N --> O["服务：创建下一轮，保留历史"]
+    O -.-> C
+    classDef human fill:#e8f1ff,stroke:#3b73bf,color:#17385d;
+    classDef service fill:#eaf6ed,stroke:#4d8960,color:#244c30;
+    classDef transaction fill:#fff3dc,stroke:#b58b38,color:#634d25;
+    class A,B,D,F,H,I,J,L,N human;
+    class C,E,G,M,O service;
+    class K transaction;

@@ -1,0 +1,18 @@
+flowchart TD
+    A["运营：创建店铺基础档案"] --> C["关联商品与店铺上架"]
+    B["运营：统一商品＋多规格 SKU"] --> C
+    C --> D["创建平台 SKU 映射、售价、阈值"]
+    D --> E["事务：锁定映射，保存目标库存"]
+    E --> F["同事务：记录前值、后值、差额与原因"]
+    F --> G{"库存不高于阈值？"}
+    G -->|"是"| H["返回店铺 SKU 预警"]
+    G -->|"否"| I["返回正常库存"]
+    H --> J["竞品：手工／表格／公开文本解析"]
+    I --> J
+    J --> K["运营补齐参数，核对竞品"]
+    K --> L["建首轮：商品内轮次序号唯一"]
+    L --> M["检查资料齐备，进入诊断"]
+    classDef normal fill:#e8f1ff,stroke:#3b73bf,color:#17385d;
+    classDef transaction fill:#fff3dc,stroke:#b58b38,color:#634d25;
+    class A,B,C,D,G,H,I,J,K,L,M normal;
+    class E,F transaction;

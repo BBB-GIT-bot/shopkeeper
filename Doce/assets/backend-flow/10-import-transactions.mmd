@@ -1,0 +1,24 @@
+flowchart TD
+    A["下载四种 Excel／CSV 模板"] --> B["上传原文件，选择工作表、字段映射"]
+    B --> C["后端解析、类型／归属／重复校验"]
+    C --> D["预览：有效、错误、文件内及库内重复"]
+    D --> E["运营选保留行、跳过或更新"]
+    E --> F["确认提交：按批次重新读取原文件"]
+    F --> G{"当前行可提交？"}
+    G -->|"否"| H["记录错误或跳过，不写业务数据"]
+    G -->|"是"| I["本行事务：业务值＋必要流水"]
+    I --> J{"本行事务成功？"}
+    J -->|"否"| K["回滚本行，记录失败原因"]
+    J -->|"是"| L["记录新增／更新结果"]
+    H --> M{"还有行？"}
+    K --> M
+    L --> M
+    M -->|"是"| G
+    M -->|"否"| N["批次 committed，汇总完整结果"]
+    N --> O["逐页读取全部明细，修正后新批次重导"]
+    classDef normal fill:#e8f1ff,stroke:#3b73bf,color:#17385d;
+    classDef transaction fill:#fff3dc,stroke:#b58b38,color:#634d25;
+    classDef failure fill:#fff0ec,stroke:#bf6d55,color:#713b2b;
+    class A,B,C,D,E,F,G,J,M,N,O normal;
+    class I,L transaction;
+    class H,K failure;

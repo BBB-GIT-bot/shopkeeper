@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant O as 运营
+    participant A as 后端服务
+    participant D as MySQL
+    participant L as 真实文字模型
+    O->>A: 请求生成，指定商品与轮次
+    A->>A: 校验角色、归属和前置条件
+    A->>D: 读取上游与输入快照
+    D-->>A: 返回快照，结束读取事务
+    A->>L: HTTPX 调用，不持有业务锁
+    alt 调用失败或结构不合格
+        L-->>A: 服务错误、超时或缺字段
+        A-->>O: 502／504，保留已有版本
+    else 结构完整
+        L-->>A: 结构化文字结果
+        A->>D: 短事务：重新检查上游
+        alt 上游已变化
+            A-->>O: 409，重新核对输入
+        else 上游仍有效
+            A->>D: 保存新草稿与快照
+            A-->>O: 201，新版本资源
+            O->>A: 编辑保存新版本，确认
+            A->>D: 校验并保存 confirmed
+        end
+    end

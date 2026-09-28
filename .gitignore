@@ -1,0 +1,78 @@
+# Local credentials and environment settings; keep shareable examples.
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Python environments, bytecode and test caches.
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+*.egg-info/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Frontend dependencies, builds and browser test output.
+node_modules/
+dist/
+.vite/
+coverage/
+playwright-report/
+test-results/
+
+# Local database files, including transaction sidecars.
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Backend runtime files: uploads, generated media and isolated MySQL data.
+# Only the teaching templates and synthetic CSV example are included.
+/app/backend/storage/*
+!/app/backend/storage/demo/
+/app/backend/storage/demo/*
+!/app/backend/storage/demo/*-template.csv
+!/app/backend/storage/demo/*-template.xlsx
+!/app/backend/storage/demo/metrics-with-errors-and-duplicates.csv
+!/app/backend/storage/classroom/
+/app/backend/storage/classroom/*
+!/app/backend/storage/classroom/demo/
+/app/backend/storage/classroom/demo/*
+!/app/backend/storage/classroom/demo/*-template.csv
+!/app/backend/storage/classroom/demo/*-template.xlsx
+!/app/backend/storage/classroom/demo/metrics-with-errors-and-duplicates.csv
+
+# Logs, temporary files and local editor/OS settings.
+*.log
+*.pid
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

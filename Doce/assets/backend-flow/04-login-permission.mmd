@@ -1,0 +1,17 @@
+flowchart TD
+    A["登录：用户名、密码"] --> B{"启用账号且散列校验通过？"}
+    B -->|"否"| E["401：登录失败"]
+    B -->|"是"| C["返回 JWT，默认 8 小时"]
+    C --> D["业务请求携带 Bearer token"]
+    D --> F{"签名、期限、当前账号有效？"}
+    F -->|"否"| E
+    F -->|"是"| G{"数据库当前角色允许此操作？"}
+    G -->|"否"| H["403：拒绝越权，不写业务数据"]
+    G -->|"是"| I{"归属、版本与阶段满足？"}
+    I -->|"否"| J["404／409／422：明确原因"]
+    I -->|"是"| K["调用业务服务，按事务保存"]
+    K --> L["返回资源，前端重新读取"]
+    classDef normal fill:#e8f1ff,stroke:#3b73bf,color:#17385d;
+    classDef failure fill:#fff0ec,stroke:#bf6d55,color:#713b2b;
+    class A,B,C,D,F,G,I,K,L normal;
+    class E,H,J failure;

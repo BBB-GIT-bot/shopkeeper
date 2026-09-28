@@ -1,0 +1,32 @@
+{
+  "theme": "base",
+  "securityLevel": "strict",
+  "fontFamily": "Microsoft YaHei, SimHei, sans-serif",
+  "themeVariables": {
+    "fontFamily": "Microsoft YaHei, SimHei, sans-serif",
+    "fontSize": "18px",
+    "primaryColor": "#e8f1ff",
+    "primaryTextColor": "#17385d",
+    "primaryBorderColor": "#3b73bf",
+    "lineColor": "#567084",
+    "secondaryColor": "#eaf6ed",
+    "tertiaryColor": "#fff3dc",
+    "background": "#ffffff"
+  },
+  "flowchart": {
+    "htmlLabels": true,
+    "curve": "linear",
+    "nodeSpacing": 30,
+    "rankSpacing": 40,
+    "padding": 18,
+    "useMaxWidth": false
+  },
+  "sequence": {
+    "useMaxWidth": false,
+    "actorFontSize": 18,
+    "messageFontSize": 16,
+    "noteFontSize": 16,
+    "wrap": true
+  },
+  "state": {"useMaxWidth": false}
+}

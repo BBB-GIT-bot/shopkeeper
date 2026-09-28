@@ -1,0 +1,22 @@
+flowchart TD
+    A["API：校验确认创意与选定项"] --> B["事务：入队 pending，保存配置快照"]
+    B --> C["worker：检查运行额度与待处理任务"]
+    C --> D["短事务：锁配额、领取任务、创建尝试"]
+    D --> E["提交事务，子进程制作演示素材"]
+    E --> F{"取消或超过期限？"}
+    F -->|"是"| G["保留尝试结果，尽可能终止子进程"]
+    G --> H{"已取消？"}
+    H -->|"是"| I["cancelled；迟到结果丢弃"]
+    H -->|"否"| J["timeout；按剩余预算重新入队"]
+    F -->|"否：制作返回"| K{"文件合格且尝试仍为当前？"}
+    K -->|"否：旧结果"| I2["不覆盖当前状态、不建素材"]
+    K -->|"制作失败"| J2["failed；按剩余预算重新入队"]
+    K -->|"是"| L["事务：保存待审核素材＋succeeded"]
+    J -.-> C
+    J2 -.-> C
+    classDef normal fill:#e8f1ff,stroke:#3b73bf,color:#17385d;
+    classDef transaction fill:#fff3dc,stroke:#b58b38,color:#634d25;
+    classDef failure fill:#fff0ec,stroke:#bf6d55,color:#713b2b;
+    class A,C,E,F,H,K normal;
+    class B,D,L transaction;
+    class G,I,J,I2,J2 failure;

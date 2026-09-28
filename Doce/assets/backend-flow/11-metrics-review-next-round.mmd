@@ -1,0 +1,23 @@
+flowchart TD
+    A["已批准实验，明确店铺与 A/B"] --> B["运营：录入／导入每日原始数据"]
+    B --> C["事务：五维唯一，校验日期及组归属"]
+    C --> D["汇总原始值，再算 CTR／转化率／ROI"]
+    D --> E["缺失与零分母明确标记，展示目标对比"]
+    E --> F["周期结束：运营确认复盘日期范围"]
+    F --> G["先保存范围，再真实生成五部分报告"]
+    G --> H{"生成成功？"}
+    H -->|"否"| I["保留范围、数据与旧报告，允许重试"]
+    I --> G
+    H -->|"是"| J["运营：编辑分析、确认报告、选行动"]
+    J --> K["事务：创建下一轮，关联来源及行动"]
+    K --> L["真实生成下一轮诊断草稿"]
+    L --> N{"下一轮诊断生成成功？"}
+    N -->|"是"| M["运营确认后继续创意；旧轮次仍可查"]
+    N -->|"否"| R["保留新轮次，按 round_id 重试诊断"]
+    R --> L
+    classDef human fill:#e8f1ff,stroke:#3b73bf,color:#17385d;
+    classDef service fill:#eaf6ed,stroke:#4d8960,color:#244c30;
+    classDef transaction fill:#fff3dc,stroke:#b58b38,color:#634d25;
+    class A,B,F,J,M human;
+    class D,E,G,H,I,L,N,R service;
+    class C,K transaction;

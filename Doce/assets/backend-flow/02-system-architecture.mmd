@@ -1,0 +1,17 @@
+flowchart LR
+    V["Vue：四类业务页面"] -->|"JSON／文件＋Bearer JWT"| A["FastAPI：路由、契约"]
+    A --> P["鉴权、角色、归属、阶段"]
+    P --> S["五项业务服务"]
+    S --> D[("MySQL 8.0\n业务、版本、队列")]
+    S -->|"事务外 HTTPX"| L["真实文字模型服务"]
+    S --> F["本地文件\n导入、图片、视频"]
+    W["独立 Python worker"] -->|"短事务领取、心跳"| D
+    W --> C["子进程：演示素材制作"]
+    C --> F
+    A -->|"鉴权预览／下载"| F
+    classDef api fill:#e8f1ff,stroke:#3b73bf,color:#17385d;
+    classDef data fill:#fff3dc,stroke:#b58b38,color:#634d25;
+    classDef worker fill:#eaf6ed,stroke:#4d8960,color:#244c30;
+    class V,A,P,S api;
+    class D,F data;
+    class W,C,L worker;

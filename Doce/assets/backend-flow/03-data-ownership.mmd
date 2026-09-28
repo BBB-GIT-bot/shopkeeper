@@ -1,0 +1,29 @@
+flowchart TD
+    P["统一商品 product"] --> K["商品 SKU"]
+    P --> R["运营轮次 round"]
+    P --> CP["竞品档案"]
+    P --> LS["店铺上架 listing"]
+    S["店铺 shop"] --> LS
+    LS --> MP["平台 SKU 映射＋库存"]
+    K --> MP
+    MP --> ST["库存流水"]
+    R --> C["诊断／创意版本"]
+    C --> T["素材任务"]
+    T --> AT["执行尝试"]
+    AT --> M["素材版本与审核"]
+    R --> AD["投放建议版本"]
+    S --> AD
+    M --> AD
+    AD --> AP["主管审批记录"]
+    AD --> EX["已批准实验"]
+    EX --> GR["A/B 实验组"]
+    GR --> DM["每日原始数据"]
+    EX --> RV["复盘报告与快照"]
+    DM --> RV
+    RV -.->|"来源＋所选行动"| R
+    classDef master fill:#e8f1ff,stroke:#3b73bf,color:#17385d;
+    classDef content fill:#eaf6ed,stroke:#4d8960,color:#244c30;
+    classDef business fill:#fff3dc,stroke:#b58b38,color:#634d25;
+    class P,K,S,LS,MP,ST,CP master;
+    class R,C,T,AT,M content;
+    class AD,AP,EX,GR,DM,RV business;
